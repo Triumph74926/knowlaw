@@ -71,5 +71,5 @@ export default defineConfig([
     },
   },
 ])
-KnowLaw — Nigerian legal information made accessible.
+SCITO JUS — Nigerian legal information made accessible.
 ```

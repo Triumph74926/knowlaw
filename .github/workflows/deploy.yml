@@ -1,5 +1,5 @@
 
-name: Deploy KnowLaw to GitHub Pages
+name: Deploy SCITO JUS to GitHub Pages
 
 on:
   push:

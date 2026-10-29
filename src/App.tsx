@@ -31,6 +31,7 @@ function App() {
 >("phoneSearch")
 
   const [showLandingPage, setShowLandingPage] = useState(true)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [showLoginPage, setShowLoginPage] = useState(false)
   const [authUser, setAuthUser] = useState<User | null>(null)
   const [authMode, setAuthMode] = useState<"sign-in" | "sign-up" | "reset">("sign-in")
@@ -158,14 +159,14 @@ function App() {
       <div className="screen-loader-content">
         <div className="screen-loader-logo-wrap">
           <img
-            src={`${import.meta.env.BASE_URL}scito-jus-logo.png`}
+            src={`${import.meta.env.BASE_URL}scito-jus-landing-logo-gold.png`}
             alt="SCITO JUS logo"
             className="screen-loader-logo"
           />
           {!firstScreenRef.current && (
             <>
-              <img src={`${import.meta.env.BASE_URL}scito-jus-logo.png`} alt="" aria-hidden="true" className="screen-loader-logo screen-loader-logo-gold" />
-              <img src={`${import.meta.env.BASE_URL}scito-jus-logo.png`} alt="" aria-hidden="true" className="screen-loader-logo screen-loader-logo-black" />
+              <img src={`${import.meta.env.BASE_URL}scito-jus-landing-logo-gold.png`} alt="" aria-hidden="true" className="screen-loader-logo screen-loader-logo-gold-bright" />
+              <img src={`${import.meta.env.BASE_URL}scito-jus-landing-logo-gold.png`} alt="" aria-hidden="true" className="screen-loader-logo screen-loader-logo-gold-deep" />
             </>
           )}
         </div>
@@ -742,7 +743,7 @@ if (
       <main className="landing-page auth-page">
         <header className="landing-header">
           <button className="auth-back" onClick={() => setShowLoginPage(false)}>← Back to SCITO JUS</button>
-          <img src={`${import.meta.env.BASE_URL}scito-jus-logo.png`} alt="SCITO JUS" className="landing-logo" />
+          <img src={`${import.meta.env.BASE_URL}scito-jus-logo-gold.png`} alt="SCITO JUS" className="landing-logo" />
         </header>
         <section className="auth-shell">
           <div className="auth-card">
@@ -820,7 +821,7 @@ if (
 
             <img
 
-              src={`${import.meta.env.BASE_URL}scito-jus-logo.png`}
+              src={`${import.meta.env.BASE_URL}scito-jus-logo-gold.png`}
 
               alt="Scito Jus"
 
@@ -830,19 +831,32 @@ if (
 
           </a>
 
-          <nav className="landing-nav" aria-label="Main navigation">
+          <button
+            className="mobile-nav-toggle"
+            type="button"
+            aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="landing-navigation"
+            onClick={() => setMobileMenuOpen((open) => !open)}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
 
-            <a href="#home">Home</a>
+          <nav id="landing-navigation" className={`landing-nav${mobileMenuOpen ? " landing-nav-open" : ""}`} aria-label="Main navigation">
 
-            <a href="#about">About Us</a>
+            <a href="#home" onClick={() => setMobileMenuOpen(false)}>Home</a>
 
-            <a href="#legal-topics">Legal Topics</a>
+            <a href="#about" onClick={() => setMobileMenuOpen(false)}>About Us</a>
 
-            <a href="#contact">Contact Us</a>
+            <a href="#legal-topics" onClick={() => setMobileMenuOpen(false)}>Legal Topics</a>
 
-            <button className="landing-login-button" onClick={() => setShowLoginPage(true)}>{authUser ? "My account" : "Log in"}</button>
+            <a href="#contact" onClick={() => setMobileMenuOpen(false)}>Contact Us</a>
 
-            <a href="#get-legal-help" className="landing-nav-cta">
+            <button className="landing-login-button" onClick={() => { setMobileMenuOpen(false); setShowLoginPage(true) }}>{authUser ? "My account" : "Log in"}</button>
+
+            <a href="#get-legal-help" className="landing-nav-cta" onClick={() => setMobileMenuOpen(false)}>
 
               Get Legal Help
 
@@ -867,12 +881,12 @@ if (
               <div><strong>Clear</strong><span>practical next steps</span></div>
             </div>
             <button className="welcome-explore" onClick={() => scrollToSection("legal-topics")}>
-              Explore legal topics <span aria-hidden="true">→</span>
+              Explore legal topics <span className="button-arrow" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path d="M4 10h12m-5-5 5 5-5 5" /></svg></span>
             </button>
           </div>
           <div className="welcome-showcase-art" aria-hidden="true">
             <div className="welcome-orbit">
-              <img src={`${import.meta.env.BASE_URL}scito-jus-logo.png`} alt="" />
+              <img src={`${import.meta.env.BASE_URL}scito-jus-logo-gold.png`} alt="" />
               <i />
             </div>
             <p>KNOW THE LAW<br />KNOW YOUR RIGHTS</p>
@@ -914,7 +928,7 @@ if (
 
             >
 
-              Get Started <span aria-hidden="true">→</span>
+              Get Started <span className="button-arrow" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path d="M4 10h12m-5-5 5 5-5 5" /></svg></span>
 
             </button>
 
@@ -942,7 +956,7 @@ if (
 
               <span className="hero-visual-mark">§</span>
 
-              <span>SCITO JUS</span>
+              <img src={`${import.meta.env.BASE_URL}scito-jus-logo-gold.png`} alt="" className="hero-brand-logo" />
 
               <span className="hero-visual-pill">LEGAL GUIDE</span>
 
@@ -1096,7 +1110,7 @@ if (
 
           >
 
-            Explore Legal Information <span aria-hidden="true">→</span>
+            Explore Legal Information <span className="button-arrow" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path d="M4 10h12m-5-5 5 5-5 5" /></svg></span>
 
           </button>
 
@@ -1272,6 +1286,43 @@ if (
 
         </section>
 
+        <section className="landing-contact" id="contact">
+          <div className="contact-copy">
+            <p className="contact-kicker">WE’RE EASY TO REACH</p>
+            <h2>Let’s talk.</h2>
+            <p className="contact-intro">
+              Have a question or want to get in touch? Choose the channel that works best for you.
+            </p>
+            <span className="contact-response-note">Connect with Scito Jus</span>
+          </div>
+
+          <div className="contact-options" aria-label="Contact options">
+            <a className="contact-option" href="tel:+2348085678680">
+              <span className="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3.8 9.5 3l2 4.5-2.2 1.6a14.4 14.4 0 0 0 5.6 5.6l1.6-2.2 4.5 2-.8 2.5a2.3 2.3 0 0 1-2.5 1.6A16.5 16.5 0 0 1 5.4 6.3 2.3 2.3 0 0 1 7 3.8Z" /></svg></span>
+              <span className="contact-option-copy"><span className="contact-option-label">Call us</span><span className="contact-option-value">08085678680</span></span>
+              <span className="contact-arrow" aria-hidden="true">↗</span>
+            </a>
+
+            <a className="contact-option" href="https://wa.me/2349017838364" target="_blank" rel="noreferrer">
+              <span className="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4.1A8 8 0 1 1 20 11.5Z" /><path d="M9 8.5c.4 2 1.6 3.2 3.6 4" /></svg></span>
+              <span className="contact-option-copy"><span className="contact-option-label">WhatsApp</span><span className="contact-option-value">09017838364</span></span>
+              <span className="contact-arrow" aria-hidden="true">↗</span>
+            </a>
+
+            <a className="contact-option" href="mailto:ajetomobibethel2009@gmail.com">
+              <span className="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2" /><path d="m4.5 7 7.5 6 7.5-6" /></svg></span>
+              <span className="contact-option-copy"><span className="contact-option-label">Email</span><span className="contact-option-value">ajetomobibethel2009@gmail.com</span></span>
+              <span className="contact-arrow" aria-hidden="true">↗</span>
+            </a>
+
+            <a className="contact-option" href="https://www.instagram.com/bethel_triumph/" target="_blank" rel="noreferrer">
+              <span className="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4" /><circle cx="12" cy="12" r="3.5" /><circle className="contact-icon-dot" cx="17.5" cy="6.8" r=".8" /></svg></span>
+              <span className="contact-option-copy"><span className="contact-option-label">Instagram</span><span className="contact-option-value">@bethel_triumph</span></span>
+              <span className="contact-arrow" aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </section>
+
         <section className="landing-final-cta" id="get-legal-help">
 
           <h2>Ready to understand your rights?</h2>
@@ -1290,19 +1341,19 @@ if (
 
           >
 
-            Get Started <span aria-hidden="true">→</span>
+            Get Started <span className="button-arrow" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path d="M4 10h12m-5-5 5 5-5 5" /></svg></span>
 
           </button>
 
         </section>
 
-        <footer className="landing-footer" id="contact">
+        <footer className="landing-footer">
 
           <div className="footer-brand">
 
             <img
 
-              src={`${import.meta.env.BASE_URL}scito-jus-logo.png`}
+              src={`${import.meta.env.BASE_URL}scito-jus-logo-gold.png`}
 
               alt="Scito Jus"
 
@@ -1354,7 +1405,7 @@ if (
       <main className="app">
         <header className="header">
           <button className="back-button" onClick={handleBack}>← Back</button>
-          <div className="logo">SCITO JUS</div>
+          <img className="app-logo" src={`${import.meta.env.BASE_URL}scito-jus-logo-gold.png`} alt="SCITO JUS" />
         </header>
         <section className="question-page">
           <p className="eyebrow">{topic.toUpperCase()}</p>
@@ -1407,7 +1458,7 @@ if (
 
         </button>
 
-        <div className="logo">SCITO JUS</div>
+        <img className="app-logo" src={`${import.meta.env.BASE_URL}scito-jus-logo-gold.png`} alt="SCITO JUS" />
 
       </header>
 
@@ -1695,7 +1746,7 @@ return (
 
         </button>
 
-        <div className="logo">SCITO JUS</div>
+        <img className="app-logo" src={`${import.meta.env.BASE_URL}scito-jus-logo-gold.png`} alt="SCITO JUS" />
 
       </header>
 
@@ -1995,7 +2046,7 @@ return (
 
       <header className="header">
 
-        <div className="logo">SCITO JUS</div>
+        <img className="app-logo homepage-app-logo" src={`${import.meta.env.BASE_URL}scito-jus-logo-gold.png`} alt="SCITO JUS" />
 
         <nav className="nav">
 
@@ -2208,3 +2259,4 @@ return (
 }
 
 export default App
+
